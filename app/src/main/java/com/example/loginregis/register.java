@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 public class register extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class register extends AppCompatActivity {
     Switch disp;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,7 @@ public class register extends AppCompatActivity {
             password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             disp.setText("隱藏")  ;
         } else{
-            password.setTransformationMethod(PasswordTransformationMethod.getInstance()); ;
+            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
             disp.setText("顯示")  ;
         }
     }
@@ -88,7 +90,7 @@ public class register extends AppCompatActivity {
             @Override
             public void run() {
                 // 將資料寫入資料庫
-                String djangorespone = "";
+                StringBuilder djangorespone = new StringBuilder();
 
                 HttpURLConnection djangoconnect = null;
                 try {
@@ -103,7 +105,7 @@ public class register extends AppCompatActivity {
 
                     OutputStream os = djangoconnect.getOutputStream();
                     DataOutputStream writer = new DataOutputStream(os);
-                    writer.write(content.toString().getBytes("UTF-8"));
+                    writer.write(content.toString().getBytes(StandardCharsets.UTF_8));
                     writer.flush();
                     writer.close();
                     os.close();
@@ -112,26 +114,24 @@ public class register extends AppCompatActivity {
                     int status = djangoconnect.getResponseCode();
                     Log.d("djangoresponse", String.valueOf(status));
 
-
-
                     if(status == 200){
-                        InputStreamReader reader = new InputStreamReader(inputStream,"utf-8");
+                        InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
                         BufferedReader in = new BufferedReader(reader);
 
-                        String line="";
+                        String line;
                         while ((line = in.readLine()) != null) {
-                            djangorespone += (line+"\n");
+                            djangorespone.append(line).append("\n");
                         }
                         in.close();
 
-                        String response = null;
-                        response = new JSONObject(djangorespone).getString("status");
+                        String response;
+                        response = new JSONObject(djangorespone.toString()).getString("status");
                         Log.v("django reponse", response);
 
                         if(response.contains("repeat user")){
                             register.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText(register.this, "已經註冊過囉", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(register.this, "已註冊", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }else if(response.contains("ok")){
@@ -140,13 +140,13 @@ public class register extends AppCompatActivity {
                                     Toast.makeText(register.this, "註冊成功", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            Intent intent = new Intent();
-                            intent.setClass(register.this, takephoto.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id",stuid.getText().toString());
-                            intent.putExtras(bundle);
-                            startActivity(intent);
                         }
+                        Intent intent = new Intent();
+                        intent.setClass(register.this, takephoto.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id",stuid.getText().toString());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 } catch (Exception e) {
                     register.this.runOnUiThread(new Runnable() {
@@ -160,9 +160,6 @@ public class register extends AppCompatActivity {
                     if (djangoconnect != null)
                         djangoconnect.disconnect();
                 }
-
-
-
 
             }
         }).start();
