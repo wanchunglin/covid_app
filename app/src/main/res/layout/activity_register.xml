@@ -7,13 +7,17 @@
     tools:context=".register">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout2"
+        android:layout_width="409dp"
+        android:layout_height="395dp"
         android:baselineAligned="false"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.426">
 
         <TextView
             android:id="@+id/prompt"
@@ -41,9 +45,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,9 +68,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
-                android:inputType="phone"
-                android:autofillHints="" />
+                android:inputType="phone" />
 
         </LinearLayout>
 
@@ -88,9 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
-                android:inputType="textEmailAddress"
-                android:autofillHints="" />
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,9 +115,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:ems="10"
-                android:inputType="numberPassword"
-                android:autofillHints="" />
+                android:inputType="numberPassword" />
 
         </LinearLayout>
 
@@ -124,7 +128,7 @@
 
             <TextView
                 android:id="@+id/pass_prompt"
-                android:layout_width="127dp"
+                android:layout_width="99dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -132,7 +136,7 @@
 
             <EditText
                 android:id="@+id/editTextTextPassword7"
-                android:layout_width="233dp"
+                android:layout_width="191dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints=""
@@ -141,11 +145,12 @@
 
             <Switch
                 android:id="@+id/switch3"
-                android:layout_width="88dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="display"
-                android:text="顯示" />
+                android:text="@string/switchtext"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
         </LinearLayout>
 
@@ -158,5 +163,18 @@
             android:text="完成" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar7"
+        style="?android:attr/progressBarStyle"
+        android:visibility="invisible"
+        android:layout_width="84dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.322" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

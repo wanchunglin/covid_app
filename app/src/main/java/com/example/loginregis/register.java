@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -33,6 +35,8 @@ public class register extends AppCompatActivity {
     EditText phone ;
     EditText password ;
     Switch disp;
+    ProgressBar spinner ;
+    Handler handler = new Handler();
 
 
     @SuppressLint("SetTextI18n")
@@ -41,17 +45,13 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        spinner = findViewById(R.id.progressBar7);
         name = findViewById(R.id.name);
-        name.setText("萬長霖");
         phone = findViewById(R.id.editTextPhone);
-        phone.setText("0975363637");
         email = findViewById(R.id.mail);
-        email.setText("wanchunglin.eed06@g2.nctu.edu.tw");
         stuid = findViewById(R.id.editTextNumberPassword);
-        stuid.setText("0610807");
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         password = findViewById(R.id.editTextTextPassword7);
-        password.setText("SAM310428");
         disp = findViewById((R.id.switch3));
     }
 
@@ -85,13 +85,16 @@ public class register extends AppCompatActivity {
         }
         content.setCharAt(content.lastIndexOf(", "),'}') ;
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 將資料寫入資料庫
                 StringBuilder djangorespone = new StringBuilder();
-
+                handler.post(new Runnable() {
+                    public void run() {
+                        spinner.setVisibility(View.VISIBLE);
+                    }
+                });
                 HttpURLConnection djangoconnect = null;
                 try {
 
@@ -131,7 +134,7 @@ public class register extends AppCompatActivity {
                         if(response.contains("repeat user")){
                             register.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText(register.this, "已註冊", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(register.this, "已註冊過了!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }else if(response.contains("ok")){
@@ -140,13 +143,14 @@ public class register extends AppCompatActivity {
                                     Toast.makeText(register.this, "註冊成功", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                            Intent intent = new Intent();
+                            intent.setClass(register.this, takephoto.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id",stuid.getText().toString());
+                            intent.putExtras(bundle);
+                            startActivity(intent);
                         }
-                        Intent intent = new Intent();
-                        intent.setClass(register.this, takephoto.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("id",stuid.getText().toString());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+
                     }
                 } catch (Exception e) {
                     register.this.runOnUiThread(new Runnable() {
@@ -159,6 +163,11 @@ public class register extends AppCompatActivity {
                 }finally {
                     if (djangoconnect != null)
                         djangoconnect.disconnect();
+                    handler.post(new Runnable() {
+                        public void run() {
+                            spinner.setVisibility(View.INVISIBLE);
+                        }
+                    });
                 }
 
             }

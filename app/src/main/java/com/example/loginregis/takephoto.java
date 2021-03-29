@@ -192,7 +192,7 @@ public class takephoto extends AppCompatActivity {
                     /* 設定每次寫入1024bytes */
                     int bufferSize = 1024;
                     byte[] buffer = new byte[bufferSize];
-                    int length ;
+                    int length;
                     /* 從檔案讀取資料至緩衝區 */
                     while ((length = fStream.read(buffer)) != -1) {
                         /* 將資料寫入DataOutputStream中 */
@@ -222,7 +222,7 @@ public class takephoto extends AppCompatActivity {
                         response = new JSONObject(djangorespone.toString()).getString("status");
                         Log.v("django reponse", response);
 
-                        if(response.contains("ok")){
+                        if (response.contains("ok")) {
                             Log.d("upload", "success");
                             takephoto.this.runOnUiThread(new Runnable() {
                                 public void run() {
@@ -245,13 +245,17 @@ public class takephoto extends AppCompatActivity {
                     takephoto.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(takephoto.this, "上傳失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
+                            spinner.setVisibility(View.INVISIBLE);
                         }
                     });
                     Log.e("upload", "failed " + e.getLocalizedMessage());
+                } finally {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            spinner.setVisibility(View.INVISIBLE);
+                        }
+                    });
                 }
-
-
-                // 讀取更新後的資料
             }
         });
         thread.start();

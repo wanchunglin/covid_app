@@ -39,7 +39,7 @@ public class verify extends AppCompatActivity {
 
 
     public void verifying(View view)  {
-        final String content = String.format("{\"%s\",\"%s\"}", id, ver.getText().toString());
+        final String content = String.format("{\"userID\":\"%s\",\"verify\":\"%s\"}", id, ver.getText().toString());
         final String verifyurl = "http://140.113.123.58:8000/users/verify/";
 
         new Thread(new Runnable() {
@@ -50,7 +50,6 @@ public class verify extends AppCompatActivity {
 
                 HttpURLConnection djangoconnect = null;
                 try {
-
                     URL url = new URL(verifyurl);
                     djangoconnect = (HttpURLConnection)url.openConnection();
                     djangoconnect.setRequestMethod("POST");
@@ -83,13 +82,13 @@ public class verify extends AppCompatActivity {
                         response = new JSONObject(djangorespone.toString()).getString("status");
                         Log.v("django reponse", response);
 
-                        if(response.equals("fail\n")){
+                        if(response.contains("fail")){
                             verify.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText(verify.this, "驗證碼錯誤", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }else if(response.equals("ok\n")){
+                        }else if(response.contains("ok")){
                             verify.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText(verify.this, "驗證成功!", Toast.LENGTH_SHORT).show();
