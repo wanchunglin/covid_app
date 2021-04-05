@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -12,6 +13,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -30,10 +32,13 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class login extends AppCompatActivity {
@@ -41,6 +46,7 @@ public class login extends AppCompatActivity {
     EditText stuid ;
     EditText pas ;
     ImageView ivCode;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch disp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,82 +69,65 @@ public class login extends AppCompatActivity {
         }
     }
     public void fin(View view) {
-        final String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\"}", stuid.getText().toString(), pas.getText().toString());
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 將資料寫入資料庫
                 String loginurl = "http://140.113.123.58:8000/users/login/";
-                StringBuilder djangorespone = new StringBuilder();
+                String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\"}", stuid.getText().toString(), pas.getText().toString());
 
-                HttpURLConnection djangoconnect = null;
+                String response = null;
+                djangocon connect = new djangocon();
+
+                Map<String, String> property = new HashMap<>();
+                property.put("Content-Type", "application/json; charset=UTF-8");
+                property.put("Accept", "application/json");
+                // 將資料寫入資料庫
                 try {
-                    URL url = new URL(loginurl);
-                    djangoconnect = (HttpURLConnection)url.openConnection();
-                    djangoconnect.setRequestMethod("POST");
-                    djangoconnect.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                    djangoconnect.setRequestProperty("Accept", "application/json");
-                    djangoconnect.setDoInput(true);
-                    djangoconnect.setDoOutput(true);
-
-                    OutputStream os = djangoconnect.getOutputStream();
-                    DataOutputStream writer = new DataOutputStream(os);
-                    writer.write(content.getBytes(StandardCharsets.UTF_8));
-                    writer.flush();
-                    writer.close();
-                    os.close();
-
-                    InputStream inputStream = djangoconnect.getInputStream();
-                    int status = djangoconnect.getResponseCode();
-                    Log.d("djangoresponse", String.valueOf(status));
-
-                    if(status == 200){
-                        InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-                        BufferedReader in = new BufferedReader(reader);
-
-                        String line;
-                        while ((line = in.readLine()) != null)
-                            djangorespone.append(line).append("\n");
-                        in.close();
-
-                        String response;
-                        response = new JSONObject(djangorespone.toString()).getString("status");
-                        Log.v("django reponse", response);
-
-                        if(response.contains("fail")){
-                            login.this.runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText(login.this, "學號或密碼有誤", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }else if(response.contains("ok")){
-                            SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            dff.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-                            final String encodeinfo = stuid.getText().toString() + dff.format(new Date());
-                            final Hashtable hints = new Hashtable();
-                            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-                            BarcodeEncoder encoder = new BarcodeEncoder();
-                            final Bitmap bit = encoder.encodeBitmap(encodeinfo, BarcodeFormat.QR_CODE, 1000, 1000,hints);
-                            login.this.runOnUiThread(new Runnable() {
-                                public void run() {
-                                    ivCode.setImageBitmap(bit);
-                                    Toast.makeText(login.this, "成功!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }
-                } catch (Exception e) {
+                    response = connect.connection(loginurl, "POST", property, content.toString(), null);
+                } catch (IOException e) {
                     login.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(login.this, "登入失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    Log.e("loginfailed", e.getLocalizedMessage());
                     e.printStackTrace();
-                }finally {
-                    if (djangoconnect != null)
-                        djangoconnect.disconnect();
                 }
+
+                try {
+                    response = new JSONObject(response).getString("status");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if(response.contains("fail")){
+                    login.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(login.this, "學號或密碼有誤", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else if(response.contains("ok")){
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    dff.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+                    final String encodeinfo = stuid.getText().toString() + dff.format(new Date());
+                    final Hashtable hints = new Hashtable();
+                    hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+                    BarcodeEncoder encoder = new BarcodeEncoder();
+                    final Bitmap bit;
+                    try {
+                        bit = encoder.encodeBitmap(encodeinfo, BarcodeFormat.QR_CODE, 1000, 1000,hints);
+                        login.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                ivCode.setImageBitmap(bit);
+                                Toast.makeText(login.this, "成功!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+                }
+
 
             }
         }).start();

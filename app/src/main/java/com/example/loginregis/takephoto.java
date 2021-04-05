@@ -42,6 +42,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class takephoto extends AppCompatActivity {
     Button take;
@@ -153,109 +155,59 @@ public class takephoto extends AppCompatActivity {
     }
 
     public void OK(View view) {
-        final Thread thread = new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 // 將資料寫入資料庫
-
                 handler.post(new Runnable() {
                     public void run() {
                         spinner.setVisibility(View.VISIBLE);
                     }
                 });
+
+                String response = null;
                 String end = "\r\n";
                 String twoHyphens = "--";
                 String boundary = "*****";
-                StringBuilder djangorespone = new StringBuilder();
                 String actionUrl = "http://140.113.123.58:8000/userImages/addImage/";
 
+                Map<String, String> property = new HashMap<>();
+                property.put("Connection", "Keep-Alive");
+                property.put("Charset", "UTF-8");
+                property.put("Content-Type", "multipart/form-data;boundary=" + boundary);
+                String content = twoHyphens + boundary + end +
+                        String.format("Content-Disposition: form-data; name=\"imagefile\";filename=\"%s.jpg\"%s", id, end) + end;
+
+                djangocon connect = new djangocon();
                 try {
-                    URL url = new URL(actionUrl);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    /* 允許Input、Output，不使用Cache */
-                    con.setDoInput(true);
-                    con.setDoOutput(true);
-                    con.setUseCaches(false);
-                    /* 設定傳送的method=POST */
-                    con.setRequestMethod("POST");
-                    /* setRequestProperty */
-                    con.setRequestProperty("Connection", "Keep-Alive");
-                    con.setRequestProperty("Charset", "UTF-8");
-                    con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                    /* 設定DataOutputStream */
-                    DataOutputStream ds = new DataOutputStream(con.getOutputStream());
-                    ds.writeBytes(twoHyphens + boundary + end);
-                    ds.writeBytes(String.format("Content-Disposition: form-data; name=\"imagefile\";filename=\"%s.jpg\"%s", id, end));
-                    ds.writeBytes(end);
-                    /* 取得檔案的FileInputStream */
-                    FileInputStream fStream = new FileInputStream(currentPhotoPath);
-                    /* 設定每次寫入1024bytes */
-                    int bufferSize = 1024;
-                    byte[] buffer = new byte[bufferSize];
-                    int length;
-                    /* 從檔案讀取資料至緩衝區 */
-                    while ((length = fStream.read(buffer)) != -1) {
-                        /* 將資料寫入DataOutputStream中 */
-                        ds.write(buffer, 0, length);
-                    }
-                    ds.writeBytes(end);
-                    ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
-                    /* close streams */
-                    fStream.close();
-                    ds.flush();
-                    /* 取得Response內容 */
-                    InputStream is = con.getInputStream();
-                    int status = con.getResponseCode();
-                    Log.d("djangoresponse", String.valueOf(status));
+                    response = connect.connection(actionUrl,"POST",property,content,currentPhotoPath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(takephoto.this, "上傳失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
+                }
 
-                    if (status == 200) {
-                        InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-                        BufferedReader in = new BufferedReader(reader);
+                try {
+                    response = new JSONObject(response).getString("status");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                        String line;
-                        while ((line = in.readLine()) != null) {
-                            djangorespone.append(line).append("\n");
-                        }
-                        in.close();
-
-                        String response;
-                        response = new JSONObject(djangorespone.toString()).getString("status");
-                        Log.v("django reponse", response);
-
-                        if (response.contains("ok")) {
-                            Log.d("upload", "success");
-                            takephoto.this.runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText(takephoto.this, "上傳成功", Toast.LENGTH_SHORT).show();
-                                    spinner.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                            Intent intent = new Intent();
-                            intent.setClass(takephoto.this, verify.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id", id);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    }
-                    /* 關閉DataOutputStream */
-                    ds.close();
-                    con.disconnect();
-                } catch (Exception e) {
+                if (response.contains("ok")) {
+                    Log.d("upload", "success");
                     takephoto.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(takephoto.this, "上傳失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(takephoto.this, "上傳成功!請檢查信箱進行驗證", Toast.LENGTH_LONG).show();
                             spinner.setVisibility(View.INVISIBLE);
                         }
                     });
-                    Log.e("upload", "failed " + e.getLocalizedMessage());
-                } finally {
-                    handler.post(new Runnable() {
-                        public void run() {
-                            spinner.setVisibility(View.INVISIBLE);
-                        }
-                    });
+                    Intent intent = new Intent();
+                    intent.setClass(takephoto.this, verify.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", id);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
+
             }
         });
         thread.start();
