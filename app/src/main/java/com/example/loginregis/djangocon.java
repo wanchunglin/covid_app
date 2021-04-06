@@ -67,6 +67,7 @@ public class djangocon {
         Log.d("djangoresponse", String.valueOf(status));
         String response = null;
         if (status == 200) {
+            response = "";
             InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             BufferedReader in = new BufferedReader(reader);
 
@@ -76,6 +77,7 @@ public class djangocon {
             }
             in.close();
         }
+        Log.d("djangoresponse", response);
         return response;
     }
 }

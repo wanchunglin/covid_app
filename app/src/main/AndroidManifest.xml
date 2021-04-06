@@ -7,15 +7,16 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_background"
         android:label="防疫計畫APP"
         android:roundIcon="@drawable/mask"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".QRcode"></activity>
+        <activity android:name=".takephoto" />
 
-        <activity android:name=".takephoto"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.loginregis.fileprovider"
@@ -23,7 +24,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/pro_paths"></meta-data>
+                android:resource="@xml/pro_paths" />
         </provider>
 
         <activity android:name=".verify" />
@@ -38,8 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

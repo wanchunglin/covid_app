@@ -182,11 +182,16 @@ public class takephoto extends AppCompatActivity {
                 try {
                     response = connect.connection(actionUrl,"POST",property,content,currentPhotoPath);
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(takephoto.this, "上傳失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();takephoto.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(takephoto.this, "上傳失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
                 }
 
                 try {
+                    assert response != null;
                     response = new JSONObject(response).getString("status");
                 } catch (JSONException e) {
                     e.printStackTrace();

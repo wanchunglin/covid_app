@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="歡迎使用防疫系統"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,16 +85,6 @@
             android:layout_height="wrap_content"
             android:onClick="fin"
             android:text="登入" />
-
-        <ImageView
-            android:id="@+id/ivCode"
-            android:layout_width="319dp"
-            android:layout_height="296dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            app:srcCompat="@color/design_default_color_surface" />
 
     </LinearLayout>
 

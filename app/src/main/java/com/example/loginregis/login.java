@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 
 import android.annotation.SuppressLint;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class login extends AppCompatActivity {
 
     EditText stuid ;
     EditText pas ;
-    ImageView ivCode;
+
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch disp;
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -51,7 +52,7 @@ public class login extends AppCompatActivity {
         stuid = findViewById(R.id.stid);
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         pas = findViewById(R.id.editTextPassword7);
-        ivCode = findViewById(R.id.ivCode);
+
         disp = findViewById(R.id.switch1);
     }
     public void display(View view){
@@ -88,6 +89,7 @@ public class login extends AppCompatActivity {
                         }
                     });
                     e.printStackTrace();
+                    return;
                 }
 
                 try {
@@ -103,27 +105,18 @@ public class login extends AppCompatActivity {
                         }
                     });
                 }else if(response.contains("ok")){
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    dff.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-                    final String encodeinfo = stuid.getText().toString() + '\n' +dff.format(new Date());
-                    final Hashtable hints = new Hashtable();
-                    hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-                    BarcodeEncoder encoder = new BarcodeEncoder();
-                    final Bitmap bit;
-                    try {
-                        bit = encoder.encodeBitmap(encodeinfo, BarcodeFormat.QR_CODE, 1000, 1000,hints);
-                        login.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                ivCode.setImageBitmap(bit);
-                                Toast.makeText(login.this, "成功!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } catch (WriterException e) {
-                        e.printStackTrace();
-                    }
+                    login.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(login.this, "成功!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Intent intent = new Intent();
+                    intent.setClass(login.this, QRcode.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", stuid.getText().toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
-
-
             }
         }).start();
     }

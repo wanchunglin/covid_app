@@ -114,12 +114,15 @@ public class register extends AppCompatActivity {
                         }
                     });
                     e.printStackTrace();
+                    return;
                 }
 
                 try {
+                    assert response != null;
                     response = new JSONObject(response).getString("status");
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
 
                 if (response.contains("repeat user")) {
