@@ -10,7 +10,7 @@ The entire process is below:
 3. Third, verify their account by entering the verifying code, verifying code should be sent in their registed email.
 4. Finally, once they enter the gate, they should login their account.
 
-if login is success, then app will create a QRcode. Student should let this QRcode scanned by scanner to check their identity.
+If login is success, then app will create a QRcode. Student should let this QRcode scanned by scanner to check their identity.
 After scanning, there is a camera at the gate taking a picture of the student to confirm that the person who log in to the account is the same as the person who registered.
 Also, the camera will check whether the student wears a mask.
 
