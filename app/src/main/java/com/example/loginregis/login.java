@@ -1,25 +1,19 @@
 package com.example.loginregis;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+
 import java.text.SimpleDateFormat;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 
 import android.widget.EditText;
@@ -48,16 +42,17 @@ public class login extends AppCompatActivity {
     ImageView ivCode;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch disp;
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        stuid = (EditText) findViewById(R.id.stid);
+        stuid = findViewById(R.id.stid);
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        pas = (EditText) findViewById(R.id.editTextPassword7);
-        ivCode = (ImageView) findViewById(R.id.ivCode);
-        disp = (Switch)  findViewById(R.id.switch1);
+        pas = findViewById(R.id.editTextPassword7);
+        ivCode = findViewById(R.id.ivCode);
+        disp = findViewById(R.id.switch1);
     }
     public void display(View view){
         if(disp.getText().toString().equals("顯示")){
@@ -110,7 +105,7 @@ public class login extends AppCompatActivity {
                 }else if(response.contains("ok")){
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     dff.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-                    final String encodeinfo = stuid.getText().toString() + dff.format(new Date());
+                    final String encodeinfo = stuid.getText().toString() + '\n' +dff.format(new Date());
                     final Hashtable hints = new Hashtable();
                     hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
                     BarcodeEncoder encoder = new BarcodeEncoder();
