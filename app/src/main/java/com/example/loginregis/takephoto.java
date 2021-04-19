@@ -169,7 +169,7 @@ public class takephoto extends AppCompatActivity {
                 String end = "\r\n";
                 String twoHyphens = "--";
                 String boundary = "*****";
-                String actionUrl = "http://140.113.123.58:8000/userImages/addImage/";
+                String actionUrl = "http://140.113.79.132:8000/userImages/addImage/";
 
                 Map<String, String> property = new HashMap<>();
                 property.put("Connection", "Keep-Alive");

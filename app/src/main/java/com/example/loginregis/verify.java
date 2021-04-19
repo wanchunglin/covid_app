@@ -49,7 +49,7 @@ public class verify extends AppCompatActivity {
                 // 將資料寫入資料庫
                 String response = null;
                 String content = String.format("{\"userID\":\"%s\",\"verify\":\"%s\"}", id, ver.getText().toString());
-                String verifyurl = "http://140.113.123.58:8000/users/verify/";
+                String verifyurl = "http://140.113.79.132:8000/users/verify/";
                 djangocon connect = new djangocon();
                 Map<String, String> property = new HashMap<>();
                 property.put("Content-Type", "application/json; charset=UTF-8");

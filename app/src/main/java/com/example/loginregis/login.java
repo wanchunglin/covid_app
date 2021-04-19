@@ -70,7 +70,7 @@ public class login extends AppCompatActivity {
             @Override
             public void run() {
                 // 將資料寫入資料庫
-                String loginurl = "http://140.113.123.58:8000/users/login/";
+                String loginurl = "http://140.113.79.132:8000/users/login/";
                 String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\"}", stuid.getText().toString(), pas.getText().toString());
 
                 String response = null;
@@ -112,6 +112,19 @@ public class login extends AppCompatActivity {
                     });
                     Intent intent = new Intent();
                     intent.setClass(login.this, QRcode.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", stuid.getText().toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else if(response.contains("not verify")){
+                    login.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(login.this, "尚未驗證完成喔~~", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Intent intent = new Intent();
+                    intent.setClass(login.this, verify.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("id", stuid.getText().toString());
                     intent.putExtras(bundle);

@@ -77,7 +77,7 @@ public class register extends AppCompatActivity {
         data[3] = data[3] + '"' + stuid.getText().toString() + '"';
         data[4] = data[4] + '"' + password.getText().toString() + '"';
 
-        final String registerurl = "http://140.113.123.58:8000/users/register/";
+        final String registerurl = "http://140.113.79.132:8000/users/register/";
 
         for (int i = 0; i < 5; i++)
             Log.d(String.valueOf(i), data[i]);
