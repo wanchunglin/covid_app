@@ -18,15 +18,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,14 +40,14 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        spinner = findViewById(R.id.progressBar7);
+        spinner = findViewById(R.id.registerProgressBar);
         name = findViewById(R.id.name);
         phone = findViewById(R.id.editTextPhone);
         email = findViewById(R.id.mail);
         stuid = findViewById(R.id.editTextNumberPassword);
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         password = findViewById(R.id.editTextTextPassword7);
-        disp = findViewById((R.id.switch3));
+        disp = findViewById((R.id.regisShowPwdSwitch));
     }
 
 

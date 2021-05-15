@@ -5,12 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
-import java.text.SimpleDateFormat;
-
 import android.annotation.SuppressLint;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -18,23 +15,14 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class login extends AppCompatActivity {
 
@@ -53,7 +41,7 @@ public class login extends AppCompatActivity {
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         pas = findViewById(R.id.editTextPassword7);
 
-        disp = findViewById(R.id.switch1);
+        disp = findViewById(R.id.loginShowPwdSwitch);
     }
     public void display(View view){
         if(disp.getText().toString().equals("顯示")){

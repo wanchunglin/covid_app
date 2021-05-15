@@ -6,26 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".register">
 
+    <ProgressBar
+        android:id="@+id/registerProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="84dp"
+        android:layout_height="72dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="請輸入基本資料"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.16000003" />
+
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="409dp"
-        android:layout_height="395dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:baselineAligned="false"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.31">
-
-        <TextView
-            android:id="@+id/prompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="請輸入基本資料"
-            android:textSize="24sp" />
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,20 +49,26 @@
 
             <TextView
                 android:id="@+id/name_prompt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="姓名" />
+                android:text="姓名"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,20 +78,26 @@
 
             <TextView
                 android:id="@+id/phone_prompt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="電話" />
+                android:text="電話"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/editTextPhone"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="phone" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
 
         </LinearLayout>
 
@@ -81,20 +108,26 @@
 
             <TextView
                 android:id="@+id/mail_prompt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="信箱" />
+                android:text="信箱"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/mail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textEmailAddress" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
         </LinearLayout>
 
         <LinearLayout
@@ -104,20 +137,26 @@
 
             <TextView
                 android:id="@+id/stuid_prompt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="center_horizontal"
-                android:text="學號" />
+                android:text="學號"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/editTextNumberPassword"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberPassword" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
 
         </LinearLayout>
 
@@ -128,15 +167,16 @@
 
             <TextView
                 android:id="@+id/pass_prompt"
-                android:layout_width="99dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.65"
                 android:gravity="center"
-                android:text="@string/password" />
+                android:text="@string/password"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/editTextTextPassword7"
-                android:layout_width="191dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints=""
@@ -144,10 +184,10 @@
                 android:inputType="textPassword" />
 
             <Switch
-                android:id="@+id/switch3"
+                android:id="@+id/regisShowPwdSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.2"
                 android:onClick="display"
                 android:text="@string/switchtext"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -155,26 +195,18 @@
         </LinearLayout>
 
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="35dp" />
+
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/confirmRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundbtngrey"
             android:onClick="finish"
             android:text="完成" />
 
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar7"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="84dp"
-        android:layout_height="72dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.322" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

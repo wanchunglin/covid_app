@@ -8,13 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
@@ -35,7 +32,7 @@ public class QRcode extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         id = bundle.getString("id");
         String encodeinfo = id + '\n' +dff.format(new Date());
-        Hashtable hints = new Hashtable();
+        Hashtable<EncodeHintType, String> hints = new Hashtable<>();
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         BarcodeEncoder encoder = new BarcodeEncoder();
 
@@ -51,7 +48,7 @@ public class QRcode extends AppCompatActivity {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dff.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         String encodeinfo = id + '\n' +dff.format(new Date());
-        Hashtable hints = new Hashtable();
+        Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         BarcodeEncoder encoder = new BarcodeEncoder();
 
