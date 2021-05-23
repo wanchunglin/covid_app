@@ -23,7 +23,6 @@
         android:id="@+id/editTextNumberPassword3"
         android:layout_width="255dp"
         android:layout_height="43dp"
-        android:autofillHints=""
         android:ems="10"
         android:inputType="numberPassword"
         android:maxLength="6"

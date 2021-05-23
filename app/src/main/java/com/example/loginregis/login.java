@@ -5,41 +5,33 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
-import java.text.SimpleDateFormat;
-
 import android.annotation.SuppressLint;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class login extends AppCompatActivity {
 
-    EditText stuid ;
-    EditText pas ;
+    EditText stuid;
+    EditText pas;
+    Button confirmLogin;
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch disp;
@@ -52,8 +44,36 @@ public class login extends AppCompatActivity {
         stuid = findViewById(R.id.stid);
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         pas = findViewById(R.id.editTextPassword7);
+        disp = findViewById(R.id.loginShowPwdSwitch);
 
-        disp = findViewById(R.id.switch1);
+        SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+        if (pref.getBoolean("loggedIn", false)){
+            // the user is already logged in
+            Log.v("login status", "the user is already logged in");
+            stuid.setText(pref.getString("userID", ""));
+            pas.setText(pref.getString("userPwd", ""));
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // 將資料寫入資料庫
+                    String loginurl = "http://140.113.79.132:8000/users/login/";
+                    String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\"}", stuid.getText().toString(), pas.getText().toString());
+
+                    djangocon connect = new djangocon();
+                    String response = loginRequestToServer(loginurl, content, connect);
+
+                    if (response != null){
+                        try {
+                            response = new JSONObject(response).getString("status");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        checkResponse(response);
+                    }
+                }
+            }).start();
+        }
     }
     public void display(View view){
         if(disp.getText().toString().equals("顯示")){
@@ -64,8 +84,8 @@ public class login extends AppCompatActivity {
             disp.setText("顯示")  ;
         }
     }
-    public void fin(View view) {
 
+    public void fin(View view) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,65 +93,81 @@ public class login extends AppCompatActivity {
                 String loginurl = "http://140.113.79.132:8000/users/login/";
                 String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\"}", stuid.getText().toString(), pas.getText().toString());
 
-                String response = null;
                 djangocon connect = new djangocon();
+                String response = loginRequestToServer(loginurl, content, connect);
 
-                Map<String, String> property = new HashMap<>();
-                property.put("Content-Type", "application/json; charset=UTF-8");
-                property.put("Accept", "application/json");
-                // 將資料寫入資料庫
-                try {
-                    response = connect.connection(loginurl, "POST", property, content.toString(), null);
-                } catch (IOException e) {
-                    login.this.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(login.this, "登入失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    e.printStackTrace();
-                    return;
-                }
-
-                try {
-                    response = new JSONObject(response).getString("status");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                if(response.contains("fail")){
-                    login.this.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(login.this, "學號或密碼有誤", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }else if(response.contains("ok")){
-                    login.this.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(login.this, "成功!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Intent intent = new Intent();
-                    intent.setClass(login.this, QRcode.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", stuid.getText().toString());
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-                else if(response.contains("not verify")){
-                    login.this.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(login.this, "尚未驗證完成喔~~", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Intent intent = new Intent();
-                    intent.setClass(login.this, verify.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", stuid.getText().toString());
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                if (response != null){
+                    try {
+                        response = new JSONObject(response).getString("status");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    checkResponse(response);
                 }
             }
         }).start();
     }
 
+    private String loginRequestToServer(String loginurl, String content, djangocon connect){
+        Map<String, String> property = new HashMap<>();
+        property.put("Content-Type", "application/json; charset=UTF-8");
+        property.put("Accept", "application/json");
+        String response = null;
+        // 將資料寫入資料庫
+        try {
+            response = connect.connection(loginurl, "POST", property, content, null);
+        } catch (IOException e) {
+            login.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(login.this, "登入失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
+                }
+            });
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    private void checkResponse(String response){
+        if(response.contains("ok")){
+            login.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(login.this, "成功!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // 登入成功後，將使用者ID, PWD暫存，下次開啟App就不需再進行登入
+            SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+            pref.edit().putBoolean("loggedIn", true).apply();
+            pref.edit().putString("userID", stuid.getText().toString()).apply();
+            pref.edit().putString("userPwd", pas.getText().toString()).apply();
+
+            Intent intent = new Intent();
+            intent.setClass(login.this, QRcode.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("id", stuid.getText().toString());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        else if(response.contains("fail")){
+            login.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(login.this, "學號或密碼有誤", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        else if(response.contains("not verify")){
+            login.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(login.this, "尚未驗證完成喔~~", Toast.LENGTH_SHORT).show();
+                }
+            });
+            Intent intent = new Intent();
+            intent.setClass(login.this, verify.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("id", stuid.getText().toString());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
 }

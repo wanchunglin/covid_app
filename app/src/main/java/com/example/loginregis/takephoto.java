@@ -184,6 +184,7 @@ public class takephoto extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();takephoto.this.runOnUiThread(new Runnable() {
                         public void run() {
+                            spinner.setVisibility(View.INVISIBLE);
                             Toast.makeText(takephoto.this, "上傳失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -202,7 +203,6 @@ public class takephoto extends AppCompatActivity {
                     takephoto.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(takephoto.this, "上傳成功!請檢查信箱進行驗證", Toast.LENGTH_LONG).show();
-                            spinner.setVisibility(View.INVISIBLE);
                         }
                     });
                     Intent intent = new Intent();
@@ -211,8 +211,15 @@ public class takephoto extends AppCompatActivity {
                     bundle.putString("id", id);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                } else if(response.contains("addImage fail")){
+                    Log.d("upload", "fail");
+                    takephoto.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(takephoto.this, "請確保臉部在畫面中保持清晰", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-
+                spinner.setVisibility(View.INVISIBLE);
             }
         });
         thread.start();

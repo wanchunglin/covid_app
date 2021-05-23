@@ -6,10 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".login">
 
+    <TextView
+        android:id="@+id/loginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="歡迎使用防疫系統"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
+
     <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="509dp"
         android:baselineAligned="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,13 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="歡迎使用防疫系統"
-            android:textSize="36sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,19 +37,25 @@
 
             <TextView
                 android:id="@+id/mail_prompt"
-                android:layout_width="wrap_content"
+                android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 android:gravity="center"
-                android:text="學號" />
+                android:text="學號"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/stid"
-                android:layout_width="wrap_content"
+                android:layout_width="53dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:ems="10"
                 android:inputType="numberPassword" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
 
         </LinearLayout>
 
@@ -55,34 +66,40 @@
 
             <TextView
                 android:id="@+id/pass_prompt"
-                android:layout_width="99dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.65"
                 android:gravity="center"
-                android:text="密碼" />
+                android:text="密碼"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/editTextPassword7"
-                android:layout_width="189dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPassword" />
 
             <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
+                android:id="@+id/loginShowPwdSwitch"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:onClick="display"
                 android:text="顯示" />
 
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
         <Button
-            android:id="@+id/button"
+            android:id="@+id/confirmLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundbtngrey"
             android:onClick="fin"
             android:text="登入" />
 

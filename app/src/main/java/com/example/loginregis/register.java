@@ -18,15 +18,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,14 +40,14 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        spinner = findViewById(R.id.progressBar7);
+        spinner = findViewById(R.id.registerProgressBar);
         name = findViewById(R.id.name);
         phone = findViewById(R.id.editTextPhone);
         email = findViewById(R.id.mail);
         stuid = findViewById(R.id.editTextNumberPassword);
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         password = findViewById(R.id.editTextTextPassword7);
-        disp = findViewById((R.id.switch3));
+        disp = findViewById((R.id.regisShowPwdSwitch));
     }
 
 
@@ -110,6 +102,7 @@ public class register extends AppCompatActivity {
                 } catch (IOException e) {
                     register.this.runOnUiThread(new Runnable() {
                         public void run() {
+                            spinner.setVisibility(View.INVISIBLE);
                             Toast.makeText(register.this, "註冊失敗請檢查網路連線", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -128,15 +121,19 @@ public class register extends AppCompatActivity {
                 if (response.contains("repeat user")) {
                     register.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(register.this, "已註冊過了!", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(register.this, "已註冊請檢查信箱", Toast.LENGTH_LONG).show();
                         }
                     });
+                    Intent intent = new Intent();
+                    intent.setClass(register.this, verify.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", stuid.getText().toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 } else if (response.contains("ok")) {
                     register.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(register.this, "註冊成功", Toast.LENGTH_SHORT).show();
-                            spinner.setVisibility(View.INVISIBLE);
                         }
                     });
                     Intent intent = new Intent();
@@ -146,6 +143,15 @@ public class register extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
+                else if (response.contains("email fail")) {
+                    register.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(register.this, "請確認信箱是否存在", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                spinner.setVisibility(View.INVISIBLE);
             }
         }).start();
     }
