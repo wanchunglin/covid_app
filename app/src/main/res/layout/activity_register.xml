@@ -166,27 +166,25 @@
 
             <TextView
                 android:id="@+id/pass_prompt"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.65"
+                android:layout_width="11dp"
+                android:layout_weight="0.291"
                 android:gravity="center"
                 android:text="@string/password"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/editTextTextPassword7"
-                android:layout_width="0dp"
+                android:layout_width="11dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-
-                android:ems="10"
+                android:layout_weight="0.54"
                 android:inputType="textPassword" />
 
             <Switch
                 android:id="@+id/regisShowPwdSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2"
+                android:layout_width="11dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.17"
                 android:onClick="display"
                 android:text="@string/switchtext"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />

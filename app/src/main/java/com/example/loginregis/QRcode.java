@@ -3,8 +3,11 @@ package com.example.loginregis;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,24 +30,11 @@ public class QRcode extends AppCompatActivity {
         setContentView(R.layout.activity_q_rcode);
         ivCode = findViewById(R.id.ivCode);
         refresh = findViewById(R.id.button8);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dff.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        Bundle bundle = getIntent().getExtras();
-        id = bundle.getString("id");
-        String encodeinfo = id + '\n' +dff.format(new Date());
-        Hashtable<EncodeHintType, String> hints = new Hashtable<>();
-        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-        BarcodeEncoder encoder = new BarcodeEncoder();
+        generate_qrcode();
 
-        try {
-            final Bitmap bit = encoder.encodeBitmap(encodeinfo, BarcodeFormat.QR_CODE, 1000, 1000,hints);
-            ivCode.setImageBitmap(bit);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
     }
 
-    public void regenerate(View view){
+    public void generate_qrcode(){
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dff.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         String encodeinfo = id + '\n' +dff.format(new Date());
@@ -53,12 +43,28 @@ public class QRcode extends AppCompatActivity {
         BarcodeEncoder encoder = new BarcodeEncoder();
 
         try {
-            final Bitmap bit = encoder.encodeBitmap(encodeinfo, BarcodeFormat.QR_CODE, 1000, 1000,hints);
+            Bitmap bit = encoder.encodeBitmap(encodeinfo, BarcodeFormat.QR_CODE, 250, 250,hints);
+            bit = Bitmap.createBitmap(bit,25,25,bit.getWidth()-50,bit.getHeight()-50);
             ivCode.setImageBitmap(bit);
         } catch (WriterException e) {
             e.printStackTrace();
         }
+    }
 
+    public void regenerate(View view ){
+        generate_qrcode();
+    }
 
+    public void log_out(View view){
+        SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("loggedIn",false);
+        editor.putString("userID","");
+        editor.putString("userPwd","");
+        editor.apply();
+
+        Intent intent = new Intent();
+        intent.setClass(QRcode.this, login.class);
+        startActivity(intent);
     }
 }

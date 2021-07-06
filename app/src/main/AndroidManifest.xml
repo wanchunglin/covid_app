@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".QRcode"></activity>
+        <activity android:name=".QRcode" />
         <activity android:name=".takephoto" />
 
         <provider
@@ -31,7 +31,7 @@
         <activity android:name=".register" />
         <activity
             android:name=".login"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

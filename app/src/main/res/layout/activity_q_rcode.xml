@@ -6,28 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".QRcode">
 
-    <ImageView
-        android:id="@+id/ivCode"
-        android:layout_width="258dp"
-        android:layout_height="256dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.353"
-        app:srcCompat="@drawable/ic_launcher_background" />
-
     <Button
         android:id="@+id/button8"
+        android:layout_width="110dp"
+        android:layout_height="53dp"
+        android:onClick="log_out"
+        android:text="登出"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivCode" />
+
+    <Button
+        android:id="@+id/button4"
         android:layout_width="110dp"
         android:layout_height="53dp"
         android:onClick="regenerate"
         android:text="重新產生"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button8"
+        app:layout_constraintTop_toBottomOf="@+id/ivCode" />
+
+    <ImageView
+        android:id="@+id/ivCode"
+        android:layout_width="405dp"
+        android:layout_height="387dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivCode"
-        app:layout_constraintVertical_bias="0.377" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.324"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

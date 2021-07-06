@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import android.widget.Button;
@@ -75,6 +76,18 @@ public class login extends AppCompatActivity {
             }).start();
         }
     }
+
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {//捕捉返回鍵
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Intent intent = new Intent();
+            intent.setClass(login.this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     public void display(View view){
         if(disp.getText().toString().equals("顯示")){
             pas.setTransformationMethod(HideReturnsTransformationMethod.getInstance());

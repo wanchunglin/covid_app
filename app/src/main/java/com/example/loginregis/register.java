@@ -33,7 +33,6 @@ public class register extends AppCompatActivity {
     ProgressBar spinner;
     Handler handler = new Handler();
 
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,11 +120,11 @@ public class register extends AppCompatActivity {
                 if (response.contains("repeat user")) {
                     register.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(register.this, "已註冊請檢查信箱", Toast.LENGTH_LONG).show();
+                            Toast.makeText(register.this, "已註冊請拍照!!", Toast.LENGTH_LONG).show();
                         }
                     });
                     Intent intent = new Intent();
-                    intent.setClass(register.this, verify.class);
+                    intent.setClass(register.this, takephoto.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("id", stuid.getText().toString());
                     intent.putExtras(bundle);
