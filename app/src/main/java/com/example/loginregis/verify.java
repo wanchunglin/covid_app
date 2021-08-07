@@ -56,7 +56,7 @@ public class verify extends AppCompatActivity {
                 property.put("Accept", "application/json");
 
                 try {
-                    response = connect.connection(verifyurl, "POST", property, content.toString(), null);
+                    response = connect.connection(verifyurl, "POST", property, content, null);
                 } catch (IOException e) {
                     verify.this.runOnUiThread(new Runnable() {
                         public void run() {

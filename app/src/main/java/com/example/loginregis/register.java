@@ -114,7 +114,6 @@ public class register extends AppCompatActivity {
                     response = new JSONObject(response).getString("status");
                 } catch (JSONException e) {
                     e.printStackTrace();
-
                 }
 
                 if (response.contains("repeat user")) {
@@ -141,6 +140,13 @@ public class register extends AppCompatActivity {
                     bundle.putString("id", stuid.getText().toString());
                     intent.putExtras(bundle);
                     startActivity(intent);
+                }
+                else if (response.contains("repeat email")) {
+                    register.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(register.this, "信箱已經使用", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 else if (response.contains("email fail")) {
                     register.this.runOnUiThread(new Runnable() {

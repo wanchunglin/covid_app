@@ -150,7 +150,7 @@
                 android:layout_weight="1"
 
                 android:ems="10"
-                android:inputType="numberPassword" />
+                android:inputType="textPersonName" />
 
             <Space
                 android:layout_width="0dp"
@@ -177,14 +177,14 @@
                 android:id="@+id/editTextTextPassword7"
                 android:layout_width="11dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.54"
+                android:layout_weight="0.53"
                 android:inputType="textPassword" />
 
             <Switch
                 android:id="@+id/regisShowPwdSwitch"
                 android:layout_width="11dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.17"
+                android:layout_weight="0.176"
                 android:onClick="display"
                 android:text="@string/switchtext"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />

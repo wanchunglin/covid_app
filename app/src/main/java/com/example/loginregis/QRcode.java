@@ -30,6 +30,8 @@ public class QRcode extends AppCompatActivity {
         setContentView(R.layout.activity_q_rcode);
         ivCode = findViewById(R.id.ivCode);
         refresh = findViewById(R.id.button8);
+        Bundle bundle = getIntent().getExtras();
+        id = bundle.getString("id");
         generate_qrcode();
 
     }

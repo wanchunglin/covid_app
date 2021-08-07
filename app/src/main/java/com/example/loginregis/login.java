@@ -1,5 +1,6 @@
 package com.example.loginregis;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,11 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +39,7 @@ public class login extends AppCompatActivity {
     EditText stuid;
     EditText pas;
     Button confirmLogin;
-
+    String token = "";
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch disp;
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -46,7 +52,23 @@ public class login extends AppCompatActivity {
         stuid.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         pas = findViewById(R.id.editTextPassword7);
         disp = findViewById(R.id.loginShowPwdSwitch);
+        final FirebaseApp firebaseApp = FirebaseApp.initializeApp(this);
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("token failed", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
 
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+                        // Log and toast
+                        Log.d("token", token);
+                    }
+                });
         SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
         if (pref.getBoolean("loggedIn", false)){
             // the user is already logged in
@@ -59,8 +81,10 @@ public class login extends AppCompatActivity {
                 public void run() {
                     // 將資料寫入資料庫
                     String loginurl = "http://140.113.79.132:8000/users/login/";
-                    String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\"}", stuid.getText().toString(), pas.getText().toString());
 
+
+                    String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\",\"token\":\"%s\"}", stuid.getText().toString(), pas.getText().toString(),token);
+                    Log.d("payload", content);
                     djangocon connect = new djangocon();
                     String response = loginRequestToServer(loginurl, content, connect);
 
@@ -88,6 +112,12 @@ public class login extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    public void forget_password(View view){
+        Intent intent = new Intent();
+        intent.setClass(login.this, forget_password.class);
+        startActivity(intent);
+    }
+
     public void display(View view){
         if(disp.getText().toString().equals("顯示")){
             pas.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -99,12 +129,13 @@ public class login extends AppCompatActivity {
     }
 
     public void fin(View view) {
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 將資料寫入資料庫
                 String loginurl = "http://140.113.79.132:8000/users/login/";
-                String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\"}", stuid.getText().toString(), pas.getText().toString());
+                String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\",\"token\":\"%s\"}", stuid.getText().toString(), pas.getText().toString(),token);
 
                 djangocon connect = new djangocon();
                 String response = loginRequestToServer(loginurl, content, connect);

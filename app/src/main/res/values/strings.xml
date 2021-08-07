@@ -23,4 +23,7 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="verify">請輸入驗證碼</string>
     <string name="switchtext">顯示</string>
+    <string name="pass"><u>忘記密碼?</u></string>
+    <string name="title_activity_reset_password">reset_password</string>
+
 </resources>
