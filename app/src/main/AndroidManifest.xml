@@ -16,17 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.example.NYCU.lifeScience.resetpassword" />
-        <activity android:name="com.example.NYCU.lifeScience.forget_password" />
-        <activity android:name="com.example.NYCU.lifeScience.QRcode" />
-        <activity android:name="com.example.NYCU.lifeScience.takephoto" />
+        <activity android:name="NYCU.epidemic.lifeScience.resetpassword" />
+        <activity android:name="NYCU.epidemic.lifeScience.forget_password" />
+        <activity android:name="NYCU.epidemic.lifeScience.QRcode" />
+        <activity android:name="NYCU.epidemic.lifeScience.takephoto" />
 
         <service
-            android:name="NYCU.MyFirebaseInstanceIDService">
+            android:name="NYCU.epidemic.lifeScience.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/mask" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -38,12 +42,12 @@
                 android:resource="@xml/pro_paths" />
         </provider>
 
-        <activity android:name="com.example.NYCU.lifeScience.verify" />
-        <activity android:name="com.example.NYCU.lifeScience.register" />
+        <activity android:name="NYCU.epidemic.lifeScience.verify" />
+        <activity android:name="NYCU.epidemic.lifeScience.register" />
         <activity
-            android:name="com.example.NYCU.lifeScience.login"
+            android:name="NYCU.epidemic.lifeScience.login"
             android:screenOrientation="fullSensor" />
-        <activity android:name="com.example.NYCU.lifeScience.MainActivity">
+        <activity android:name="NYCU.epidemic.lifeScience.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
