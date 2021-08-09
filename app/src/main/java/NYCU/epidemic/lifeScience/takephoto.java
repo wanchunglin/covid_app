@@ -1,4 +1,4 @@
-package com.example.loginregis;
+package NYCU.epidemic.lifeScience;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,37 +11,25 @@ import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
-import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -49,23 +37,15 @@ import com.google.common.util.concurrent.ListenableFuture;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import NYCU.R;
 
 public class takephoto extends AppCompatActivity {
     Button take,confirm,rt;
@@ -115,6 +95,7 @@ public class takephoto extends AppCompatActivity {
             public void analyze(@NonNull ImageProxy image) {
 
                 rotationDegrees = image.getImageInfo().getRotationDegrees();
+                Log.d("rrrrr", String.valueOf(rotationDegrees));
                 // insert your code here.
                 image.close();
             }
@@ -142,8 +123,9 @@ public class takephoto extends AppCompatActivity {
 
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
         imageCapture =
-                new ImageCapture.Builder().build();
-        Log.d("imagecap", String.valueOf(rotationDegrees));
+                new ImageCapture.Builder()
+                        .build();
+        Log.d("imagecaprotation", String.valueOf(previewView.getDisplay().getRotation()));
         camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview, imageCapture);
     }
 
@@ -186,7 +168,7 @@ public class takephoto extends AppCompatActivity {
 //            // Continue only if the File was successfully created
 //            if (photoFile != null) {
 //                Uri photoURI = FileProvider.getUriForFile(this,
-//                        "com.example.loginregis.fileprovider",
+//                        "com.example.NYCU.NYCU.lifeScience.fileprovider",
 //                        photoFile);
 //
 //                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -206,9 +188,11 @@ public class takephoto extends AppCompatActivity {
 
     public void take_pic(View view) throws IOException {
         File saveimage = createImageFile();
+        Log.d("rottttt", String.valueOf(rotationDegrees));
         Log.d("path", saveimage.getAbsolutePath());
-//        imageCapture.setTargetRotation(CameraOrientation( 90 ));
-//        Log.d("rottttt", String.valueOf(rotationDegrees));
+        imageCapture.setTargetRotation(CameraOrientation(rotationDegrees));
+        Log.d("imcaprot", String.valueOf(imageCapture.getTargetRotation()));
+
         ImageCapture.OutputFileOptions outputFileOptions =
                 new ImageCapture.OutputFileOptions.Builder(saveimage).build();
         imageCapture.takePicture(outputFileOptions,ContextCompat.getMainExecutor(this) ,

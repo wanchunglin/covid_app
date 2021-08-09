@@ -5,7 +5,12 @@
       <map>
         <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_forget_password.xml" value="0.2037037037037037" />
         <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_main.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_q_rcode.xml" value="0.20694444444444443" />
         <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_register.xml" value="0.3013888888888889" />
+        <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_resetpassword.xml" value="0.20694444444444443" />
+        <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_takephoto.xml" value="0.21388888888888888" />
+        <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_verify.xml" value="0.20694444444444443" />
       </map>
     </option>
   </component>

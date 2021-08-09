@@ -1,4 +1,4 @@
-package com.example.loginregis;
+package NYCU.epidemic.lifeScience;
 
 import android.util.Log;
 
@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;

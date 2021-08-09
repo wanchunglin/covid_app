@@ -1,4 +1,4 @@
-package com.example.loginregis;
+package NYCU.epidemic.lifeScience;
 
 import org.junit.Test;
 

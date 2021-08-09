@@ -1,4 +1,4 @@
-package com.example.loginregis;
+package NYCU.epidemic.lifeScience;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import NYCU.R;
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 public class register extends AppCompatActivity {

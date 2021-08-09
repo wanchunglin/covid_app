@@ -1,4 +1,4 @@
-package com.example.loginregis;
+package NYCU.epidemic.lifeScience;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -33,6 +33,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import NYCU.R;
 
 public class login extends AppCompatActivity {
 
@@ -72,16 +74,16 @@ public class login extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
         if (pref.getBoolean("loggedIn", false)){
             // the user is already logged in
+
             Log.v("login status", "the user is already logged in");
             stuid.setText(pref.getString("userID", ""));
             pas.setText(pref.getString("userPwd", ""));
-
+            token = pref.getString("token","");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     // 將資料寫入資料庫
                     String loginurl = "http://140.113.79.132:8000/users/login/";
-
 
                     String content = String.format("{\"userID\":\"%s\",\"password\":\"%s\",\"token\":\"%s\"}", stuid.getText().toString(), pas.getText().toString(),token);
                     Log.d("payload", content);
@@ -129,7 +131,23 @@ public class login extends AppCompatActivity {
     }
 
     public void fin(View view) {
+        final FirebaseApp firebaseApp = FirebaseApp.initializeApp(this);
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("token failed", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
 
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+                        // Log and toast
+                        Log.d("token", token);
+                    }
+                });
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -184,6 +202,7 @@ public class login extends AppCompatActivity {
             pref.edit().putBoolean("loggedIn", true).apply();
             pref.edit().putString("userID", stuid.getText().toString()).apply();
             pref.edit().putString("userPwd", pas.getText().toString()).apply();
+            pref.edit().putString("token", token).apply();
 
             Intent intent = new Intent();
             intent.setClass(login.this, QRcode.class);

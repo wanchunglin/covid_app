@@ -1,6 +1,5 @@
-package com.example.loginregis;
+package NYCU.epidemic.lifeScience;
 
-import android.app.Service;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;

@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:471479146455:android:a0373ded136d56f0135d92",
+        "android_client_info": {
+          "package_name": "NYCU.epidemic.lifeScience"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471479146455-rlet3ch0fa6dlbgmi4jo02bem6p78hj9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH5sGZWbrWSeQcwiKBNV7Gg9v3KTF2SWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471479146455-rlet3ch0fa6dlbgmi4jo02bem6p78hj9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "471479146455-lbujl7vh9pl8m9paaec2s67oom13fmh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.NYCU-covidProject"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:471479146455:android:6513eb66b16b2093135d92",
         "android_client_info": {
           "package_name": "com.example.loginregis"
@@ -29,6 +65,13 @@
             {
               "client_id": "471479146455-rlet3ch0fa6dlbgmi4jo02bem6p78hj9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "471479146455-lbujl7vh9pl8m9paaec2s67oom13fmh0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.NYCU-covidProject"
+              }
             }
           ]
         }
