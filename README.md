@@ -1,6 +1,6 @@
 # djangoapp
 
-This app is used to track the student in universtiy.
+This app is used to track the student in university.
 
 Students need to login the app by their stuent id and password to get the QRcode which is a permission to enter the gate.
 
