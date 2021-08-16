@@ -1,4 +1,4 @@
-package NYCU.epidemic.lifeScience;
+package com.nycu.biosciencepr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import NYCU.R;
+import com.R;
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 public class register extends AppCompatActivity {

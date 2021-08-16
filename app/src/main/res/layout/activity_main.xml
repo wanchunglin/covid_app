@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#C6C5B9"
-    tools:context="NYCU.epidemic.lifeScience.MainActivity">
+    tools:context="com.nycu.biosciencepr.MainActivity">
 
     <TextView
         android:id="@+id/mainTitle"

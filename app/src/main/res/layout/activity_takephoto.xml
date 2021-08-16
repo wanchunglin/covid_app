@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="NYCU.epidemic.lifeScience.takephoto">
+    tools:context="com.nycu.biosciencepr.takephoto">
 
     <Button
         android:id="@+id/button2"
@@ -90,5 +90,6 @@
             tools:srcCompat="@tools:sample/avatars" />
 
     </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

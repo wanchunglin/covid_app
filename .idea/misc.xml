@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/drawable/roundbtn.xml" value="0.21898148148148147" />
+        <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/drawable/roundbtngrey.xml" value="0.21898148148148147" />
         <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_forget_password.xml" value="0.2037037037037037" />
         <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/shps9/Downloads/djangoapp/app/src/main/res/layout/activity_main.xml" value="0.20833333333333334" />

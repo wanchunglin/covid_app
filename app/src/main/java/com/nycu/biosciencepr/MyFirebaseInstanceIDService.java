@@ -1,4 +1,4 @@
-package NYCU.epidemic.lifeScience;
+package com.nycu.biosciencepr;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,7 +15,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import NYCU.R;
+import com.R;
 
 public class MyFirebaseInstanceIDService extends FirebaseMessagingService {
 

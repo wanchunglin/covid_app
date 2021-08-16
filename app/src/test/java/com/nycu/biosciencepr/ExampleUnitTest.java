@@ -1,4 +1,4 @@
-package NYCU.epidemic.lifeScience;
+package com.nycu.biosciencepr;
 
 import org.junit.Test;
 

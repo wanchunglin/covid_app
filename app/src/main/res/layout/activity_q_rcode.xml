@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="NYCU.epidemic.lifeScience.QRcode">
+    tools:context="com.nycu.biosciencepr.QRcode">
 
     <Button
         android:id="@+id/button8"

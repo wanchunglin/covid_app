@@ -1,4 +1,4 @@
-package NYCU.epidemic.lifeScience;
+package com.nycu.biosciencepr;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -45,7 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import NYCU.R;
+import com.R;
 
 public class takephoto extends AppCompatActivity {
     Button take,confirm,rt;
@@ -95,7 +96,7 @@ public class takephoto extends AppCompatActivity {
             public void analyze(@NonNull ImageProxy image) {
 
                 rotationDegrees = image.getImageInfo().getRotationDegrees();
-                Log.d("rrrrr", String.valueOf(rotationDegrees));
+
                 // insert your code here.
                 image.close();
             }
@@ -132,19 +133,22 @@ public class takephoto extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "JPEG_" + timeStamp + ".jpg";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
         if (!storageDir.exists()) storageDir.mkdirs();
 
-        File image = File.createTempFile(
-               imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+//        File image = File.createTempFile(
+//               imageFileName,  /* prefix */
+//                ".jpg",         /* suffix */
+//                storageDir      /* directory */
+//        );
 
+        File image = new File(storageDir,imageFileName);
         if(image.exists())
             image.delete();
+
+        image.createNewFile();
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
@@ -188,8 +192,10 @@ public class takephoto extends AppCompatActivity {
 
     public void take_pic(View view) throws IOException {
         File saveimage = createImageFile();
+        ExifInterface exif= new ExifInterface(saveimage.getAbsolutePath());
+        rotationDegrees = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
         Log.d("rottttt", String.valueOf(rotationDegrees));
-        Log.d("path", saveimage.getAbsolutePath());
+//        Log.d("path", saveimage.getAbsolutePath());
         imageCapture.setTargetRotation(CameraOrientation(rotationDegrees));
         Log.d("imcaprot", String.valueOf(imageCapture.getTargetRotation()));
 

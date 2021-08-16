@@ -1,4 +1,4 @@
-package NYCU.epidemic.lifeScience;
+package com.nycu.biosciencepr;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,7 +9,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import NYCU.R;
+import com.R;
 
 // sharedPreference -- loginInfo
     // loggedIn: Boolean

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="NYCU">
+    package="com">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,13 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="NYCU.epidemic.lifeScience.resetpassword" />
-        <activity android:name="NYCU.epidemic.lifeScience.forget_password" />
-        <activity android:name="NYCU.epidemic.lifeScience.QRcode" />
-        <activity android:name="NYCU.epidemic.lifeScience.takephoto" />
+        <activity android:name="com.nycu.biosciencepr.resetpassword" />
+        <activity android:name="com.nycu.biosciencepr.forget_password" />
+        <activity android:name="com.nycu.biosciencepr.QRcode" />
+        <activity android:name="com.nycu.biosciencepr.takephoto" />
 
         <service
-            android:name="NYCU.epidemic.lifeScience.MyFirebaseInstanceIDService">
+            android:name="com.nycu.biosciencepr.MyFirebaseInstanceIDService"
+            android:exported = "true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -34,7 +34,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="NYCU.fileprovider"
+            android:authorities="com.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -42,15 +42,15 @@
                 android:resource="@xml/pro_paths" />
         </provider>
 
-        <activity android:name="NYCU.epidemic.lifeScience.verify" />
-        <activity android:name="NYCU.epidemic.lifeScience.register" />
+        <activity android:name="com.nycu.biosciencepr.verify" />
+        <activity android:name="com.nycu.biosciencepr.register" />
         <activity
-            android:name="NYCU.epidemic.lifeScience.login"
+            android:name="com.nycu.biosciencepr.login"
             android:screenOrientation="fullSensor" />
-        <activity android:name="NYCU.epidemic.lifeScience.MainActivity">
+        <activity android:name="com.nycu.biosciencepr.MainActivity"
+            android:exported = "true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

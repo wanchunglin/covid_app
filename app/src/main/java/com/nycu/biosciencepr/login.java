@@ -1,4 +1,4 @@
-package NYCU.epidemic.lifeScience;
+package com.nycu.biosciencepr;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -34,7 +34,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import NYCU.R;
+import com.R;
 
 public class login extends AppCompatActivity {
 

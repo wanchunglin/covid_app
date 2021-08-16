@@ -1,4 +1,4 @@
-package NYCU.epidemic.lifeScience;
+package com.nycu.biosciencepr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.TimeZone;
 
-import NYCU.R;
+import com.R;
 
 public class QRcode extends AppCompatActivity {
     ImageView ivCode;
