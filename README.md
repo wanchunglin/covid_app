@@ -14,4 +14,6 @@ If login is success, then app will create a QRcode. Student should let this QRco
 After scanning, there is a camera at the gate taking a picture of the student to confirm that the person who log in to the account is the same as the person who registed.
 Also, the camera will check whether the student wears a mask.
 
+若您有任何問題，歡迎聯絡 NYCU.BioScience@gmail.com
+If you have any problem, please contact NYCU.BioScience@gmail.com
 
