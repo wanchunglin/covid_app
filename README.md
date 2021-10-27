@@ -1,5 +1,7 @@
 # djangoapp
 
+[隱私權公告](https://github.com/wanchunglin/djangoapp/blob/main/%E9%9A%B1%E7%A7%81%E6%AC%8A%E5%85%AC%E5%91%8A.md)請點這裡
+
 This app is used to track the student in university.
 
 Students need to login the app by their stuent id and password to get the QRcode which is a permission to enter the gate.
